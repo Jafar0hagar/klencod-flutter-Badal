@@ -1,0 +1,152 @@
+{
+  "entities": {
+    "Currency": {
+      "title": "Currency",
+      "description": "بيانات أسعار صرف العملات الأجنبية مقابل الجنيه والفرنك التشادي",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "code": { "type": "string" },
+        "symbol": { "type": "string" },
+        "buyPrice": { "type": "number" },
+        "sellPrice": { "type": "number" },
+        "change": { "type": "string", "enum": ["up", "down", "stable"] },
+        "country": { "type": "string" },
+        "contactPhone": { "type": "string" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["id", "name", "code", "buyPrice", "sellPrice"]
+    },
+    "CurrencyRate": {
+      "title": "CurrencyRate",
+      "description": "أسعار الصرف للعملات مقابل العملة الأساسية",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "currencyCode": { "type": "string" },
+        "rateToBase": { "type": "number" },
+        "contactPhone": { "type": "string" },
+        "officeName": { "type": "string" },
+        "lastUpdated": { "type": "number" },
+        "updatedBy": { "type": "string" }
+      },
+      "required": ["id", "currencyCode", "rateToBase"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "بيانات السلع والمحاصيل التموينية المتاحة للطلب والتوريد",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "unit": { "type": "string" },
+        "category": { "type": "string", "enum": ["sugar", "flour", "oil", "rice", "other"] },
+        "inStock": { "type": "boolean" },
+        "description": { "type": "string" },
+        "image": { "type": "string" },
+        "supplierId": { "type": "string" }
+      },
+      "required": ["id", "name", "price", "unit", "inStock"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "طلبات الشراء والتعاقدات الواردة من عملاء التطبيق",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "productName": { "type": "string" },
+        "price": { "type": "string" },
+        "unit": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "notes": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "completed", "cancelled"] },
+        "timestamp": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "productName", "customerName", "customerPhone"]
+    },
+    "BroadcastAlert": {
+      "title": "BroadcastAlert",
+      "description": "التنبيهات الفورية والرسائل العاجلة للمستخدمين",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "text": { "type": "string" },
+        "time": { "type": "string" },
+        "unread": { "type": "boolean" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "title", "text", "unread"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "بيانات المشرفين والمدراء المعتمدين برمز أمان ٨ أرقام",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin_full", "supervisor", "currency_manager", "product_editor"] },
+        "pin": { "type": "string", "minLength": 8, "maxLength": 8 },
+        "phone": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["id", "name", "role", "pin"]
+    },
+    "Supplier": {
+      "title": "Supplier",
+      "description": "بيانات الموردين وتجار الجملة المعتمدين برمز أمان ٨ أرقام",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "pin": { "type": "string", "minLength": 8, "maxLength": 8 },
+        "warehouseAddress": { "type": "string" },
+        "assignedProducts": { "type": "array" },
+        "status": { "type": "string", "enum": ["active", "inactive"] },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "name", "phone", "pin", "status"]
+    }
+  },
+  "firestore": {
+    "currencies/{currencyId}": {
+      "schema": "Currency",
+      "description": "أسعار العملات المحدثة لحظياً"
+    },
+    "currencyRates/{rateId}": {
+      "schema": "CurrencyRate",
+      "description": "أسعار الصرف المقابلة للفرنك والجنيه"
+    },
+    "products/{productId}": {
+      "schema": "Product",
+      "description": "قائمة السلع والتموين المتاحة"
+    },
+    "orders/{orderId}": {
+      "schema": "Order",
+      "description": "طلبات الشراء المرسلة من العملاء"
+    },
+    "alerts/{alertId}": {
+      "schema": "BroadcastAlert",
+      "description": "التنبيهات الإخبارية والعاجلة"
+    },
+    "adminUsers/{userId}": {
+      "schema": "AdminUser",
+      "description": "حسابات المشرفين والمدراء"
+    },
+    "suppliers/{supplierId}": {
+      "schema": "Supplier",
+      "description": "حسابات الموردين وشركاء التوزيع"
+    },
+    "config/{configId}": {
+      "schema": "object",
+      "description": "إعدادات النظام العامة وأرقام هواتف الواتساب"
+    }
+  }
+}

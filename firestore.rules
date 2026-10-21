@@ -1,0 +1,78 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128;
+    }
+
+    // 1. Currency Rates Collection (Web & Simulator exchange rates)
+    match /currencyRates/{rateId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // 2. Currencies Collection (Flutter live quotes)
+    match /currencies/{currencyId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // 3. Products Catalog Collection (Food commodities & crops - supports both schema versions)
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // 4. Orders Collection (Customer purchase requests)
+    match /orders/{orderId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // 5. Alerts Collection (Broadcasted urgent market notifications)
+    match /alerts/{alertId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // 6. Admin Users Collection (Supervisors & console operators)
+    match /adminUsers/{userId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // 7. Suppliers Collection (Wholesalers & distribution partners)
+    match /suppliers/{supplierId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // 8. System Configurations Collection (WhatsApp phones & general settings)
+    match /config/{configId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // 9. Client Users & Customers Collection (Registration & Profiles)
+    match /clients/{clientId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Global Deny Catch-all for any unmapped collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

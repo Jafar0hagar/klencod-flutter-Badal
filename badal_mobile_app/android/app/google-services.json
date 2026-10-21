@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1098123820848",
+    "project_id": "gen-lang-client-0584631997",
+    "storage_bucket": "gen-lang-client-0584631997.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098123820848:android:badalappmobileclient",
+        "android_client_info": {
+          "package_name": "com.badal.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBONzsAn9GbycG_xJRk4OkHor2W8yhMTSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
